@@ -13,13 +13,31 @@ def agregar_viaje(id, placa, destino, capacidad, precio, id_cliente, estado_viaj
 
 
 def registrar_viaje():
+    clientes = registro_clientes.obtener_cliente()
+    vehiculos = registro_vehiculos.obtener_vehiculos()
+
     print(
         "\nHola! Bienvenido a Auto Transportes La Unión, por favor ingrese los siguientes datos para registrar el viaje.\n"
     )
     id = input("Ingrese el ID del viaje: \n").lower()
     id_cliente = input("Ingrese el ID del usuario: \n").lower()
+
+    clientes_encontrados = []
+
+    for x in clientes:
+        if x[0] == id_cliente:
+            clientes_encontrados.append(x)
+
+    while len(clientes_encontrados) == False:
+        id_cliente = input(
+            "Usuario no encontrado, favor ingresar un usuario valido: \n"
+        ).lower()
+        for x in clientes:
+            if x[0] == id_cliente:
+                clientes_encontrados.append(x)
+
     destino = input("Ingrese el destino del viaje: \n").lower()
-    precio = int(input("Ingrese el precio del tiquete pata este viaje: \n"))
+    precio = int(input("Ingrese el precio del tiquete para este viaje: \n"))
     estado_viaje = "Pendiente"
 
     datos_vehiculo = registro_vehiculos.consultar_vehiculo()
@@ -33,7 +51,7 @@ def registrar_viaje():
 
     while capacidad > int(datos_vehiculo[0][4]):
         print(
-            f"La cantidad de tiquetes reservados es mayor que la cantidad disponible de asientos en el vehiculo: {datos_vehiculo[4]}"
+            f"La cantidad de tiquetes reservados es mayor que la cantidad disponible de asientos en el vehiculo: {datos_vehiculo[0][4]}"
         )
 
         capacidad = int(input("Ingrese la cantidad de tiquetes que desea reservar: \n"))
