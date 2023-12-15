@@ -120,27 +120,28 @@ def eliminar_viaje():
     viajes_encontrados = []
 
     for x in lista_viajes:
+        if x[0] == id:
+            viajes_encontrados.append(x)
+        else:
+            viajes_no_eliminados.append(x)
+
+    for x in viajes_encontrados:
         if x[0] == id and x[6] == "Finalizado":
             print("No es posible eliminar el viaje ya que ya fue Finalizado")
 
-        else:
-            for x in lista_viajes:
-                if x[0] == id:
-                    viajes_encontrados.append(x)
+            viajes_no_eliminados.append(viajes_encontrados[0])
+            viajes_encontrados.pop()
+            break
 
-            for x in lista_viajes:
-                if x[0] != id:
-                    viajes_no_eliminados.append(x)
+    guardar_viaje(viajes_no_eliminados)
 
-            lista_viajes = viajes_no_eliminados
+    if len(viajes_encontrados) == 0:
+        print(
+            "Si no se ha informado ya que el viaje ya fue finalizado, ver este mensaje significa que el viaje que se intento eliminar no existe"
+        )
 
-            guardar_viaje(lista_viajes)
-
-            if len(viajes_encontrados) == 0:
-                print("No se encontro ningun vehiculo con la placa indicada.")
-
-            else:
-                print("Viaje eliminado exitosamente!")
+    else:
+        print("Viaje eliminado exitosamente!")
 
 
 def informe_viaje():

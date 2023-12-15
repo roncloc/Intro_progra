@@ -16,7 +16,7 @@ def accion_adicional():
         return
     else:
         print("Ingrese una opcion valida")
-        accion_adicional
+        accion_adicional()
 
 
 def menu_vehiculos():

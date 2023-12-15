@@ -81,30 +81,31 @@ def eliminar_cliente():
     id = input("Inserte el id del cliente: \n").lower()
     clientes_encontrados = []
 
+    for x in lista_clientes:
+        if x[0] == id:
+            clientes_encontrados.append(x)
+
+        else:
+            clientes_no_eliminados.append(x)
+
     for x in viajes_encontrados:
         if id == x[5]:
             print(
                 "Lo siento no podemos eliminar el cliente ya que tiene un viaje pendinte de realizar o ya se le realizo uno."
             )
 
-        else:
-            for x in lista_clientes:
-                if x[0] == id:
-                    clientes_encontrados.append(x)
+            clientes_no_eliminados.append(clientes_encontrados[0])
+            clientes_encontrados.pop()
+            break
 
-            for x in lista_clientes:
-                if x[0] != id:
-                    clientes_no_eliminados.append(x)
+    guardar_cliente(clientes_no_eliminados)
 
-            lista_clientes = clientes_no_eliminados
-
-            guardar_cliente(lista_clientes)
-
-            if len(clientes_encontrados) == 0:
-                print("No se encontro ningun cliente con el ID indicado.")
-
-            else:
-                print("Cliente eliminado exitosamente!")
+    if len(clientes_encontrados) == 0:
+        print(
+            "Si no se ha informado ya que el cliente tiene un viaje asignado o pendiente y por lo tanto no puede ser eliminado, ver este mensaje significa que el vehiculo que se intento eliminar no existe"
+        )
+    else:
+        print("Cliente eliminado exitosamente!")
 
 
 def informe_cliente():
